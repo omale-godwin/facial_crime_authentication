@@ -22,9 +22,9 @@ class Department(models.Model):
     
 
 class Employee(models.Model):
-    LANGUAGE = (('english','ENGLISH'),('yoruba','YORUBA'),('hausa','HAUSA'),('french','FRENCH'))
-    GENDER = (('male','MALE'), ('female', 'FEMALE'),('other', 'OTHER'))
-    emp_id = models.CharField(max_length=70, default='emp'+str(random.randrange(100,999,1)))
+    lan = models.CharField(max_length=200, blank=True, null=True)
+    gen = models.CharField(max_length=200, blank=True, null=True)
+    emp_id = models.CharField(max_length=70, default='crm'+str(random.randrange(100,999,1)))
     thumb = models.ImageField(blank=True,null=True)
     first_name = models.CharField(max_length=50, null=False)
     last_name = models.CharField(max_length=50, null=False)
@@ -32,13 +32,18 @@ class Employee(models.Model):
     email = models.EmailField(max_length=125, null=False)
     address = models.TextField(max_length=100, default='')
     emergency = models.CharField(max_length=11)
-    gender = models.CharField(choices=GENDER, max_length=10)
-    department = models.ForeignKey(Department,on_delete=models.SET_NULL, null=True)
-    joined = models.DateTimeField(default=timezone.now)
-    language = models.CharField(choices=LANGUAGE, max_length=10, default='english')
+    gender = models.CharField(blank=True, null=True, default='male', max_length=10)
+    department = models.CharField(max_length=200,  blank=True, null=True)
+    joined = models.CharField(max_length=200, blank=True, null=True)
+    language = models.CharField( blank=True, null=True, max_length=10, default='english')
     nuban = models.CharField(max_length=10, default='0123456789')
     bank = models.CharField(max_length=25, default='First Bank Plc')
-    salary = models.CharField(max_length=16,default='00,000.00')      
+    salary = models.CharField(max_length=16,default='00,000.00')  
+    crime_date = models.CharField(max_length=200, null=True, blank=True)
+    crime_type = models.CharField(max_length=200, blank=True, null=True)
+    location = models.CharField(max_length=200, blank=True, null=True)
+    Crime_detail = models.CharField(max_length=200, blank=True, null=True)
+    occupation = models.CharField(max_length=200, blank=True, null=True)    
     def __str__(self):
         return self.first_name
         
@@ -47,11 +52,11 @@ class Employee(models.Model):
     
 
 class Kin(models.Model):
-    first_name = models.CharField(max_length=20)
-    last_name = models.CharField(max_length=20)
-    address = models.TextField(max_length=100)
-    occupation = models.CharField(max_length=20)
-    mobile = models.CharField(max_length=15)
+    crime_date = models.CharField(max_length=20, blank=True, null=True)
+    crime_type = models.CharField(max_length=20, blank=True, null=True)
+    Crime_detail = models.TextField(max_length=100, blank=True, null=True)
+    occupation = models.CharField(max_length=20, blank=True, null=True)
+    mobile = models.CharField(max_length=15, blank=True, null=True)
     employee = models.OneToOneField(Employee,on_delete=models.CASCADE, blank=False, null=False)
 
     def __str__(self):

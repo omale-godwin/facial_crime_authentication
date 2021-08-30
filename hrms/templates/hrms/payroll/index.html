@@ -1,80 +1,49 @@
 {% extends 'hrms/layout.html' %}
 {% load static %}
-{% block title %} Staff Payroll | HRIS {% endblock title %}
+{% block title %} Staff Payroll | NSCDC {% endblock title %}
       <!--  MAIN BODY START HERE -->
           {% block content %}
 
             <div class="main-panel">
         <div class="content-wrapper">
           <div class="row">
-           <p class="lead text-center">Staffers Payroll System</p>
+           <p class="lead text-center">Criminal Facial Recognision Sytem</p>
             <div class="col-lg-12 grid-margin">
-              <div class="card">
-                <div class="card-body">
-                 
-                  <div class="table-responsive">
-                    <table class="table table-bordered">
-                      <thead>
-                        <tr>
-                          
-                          <th>
-                            Image
-                          </th>
-                          <th>
-                            First name
-                          </th>
-                          <th>
-                            Last name
-                          </th>
-                          <th>
-                            Account Number
-                          </th>
-                          <th>
-                            Bank Name
-                          </th>
-                          <th>
-                            Salary
-                          </th>
+              <div class="row">
+                <div class="col-md-6">
+                    <img style="width: 500px; height: 400px;" class="mb-3 mt-3" src="{% static 'id-verification.png' %}" alt="" />
 
-                           <th>
-                            Action
-                          </th>
-
-                        </tr>
-                      </thead>
-                      <tbody>
-
-                      {% for emp in emps %}
-                        <tr>
-                          <td class="font-weight-medium">
-                            <img src="{{emp.thumb.url}}" class='img-fluid rounded-circle' alt="">
-                          </td>
-                          <td>
-                            {{emp.first_name}}
-                          </td>
-                          <td>
-                            {{emp.last_name}}
-                          </td>
-                          
-                           <td>
-                            {{emp.nuban}}
-                          </td>
-                          <td>
-                            {{emp.bank}}
-                          </td>
-                           <td>
-                            {{emp.salary}}
-                          </td>
-                           <td>
-                            <button  type='button' onclick="payWithPaystack('{{emp.salary}}','{{emp.nuban}}','{{emp.bank}}')"  class="btn btn-info">  Pay</button>
-                          </td>
-                        </tr>
-                      {% endfor %}                   
-                      </tbody>
-                    </table>
-                  </div>
+                </div>
+                <div class="col-md-6">
+                   <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <h1 class="display-3"> Image Verification</h1>
+        <p class="lead">  Identification is captured, analyzed and verified, then only allowed to
+      login.</p>
+        <hr class="my-2" />
+        <p></p>
+        <p class="lead">
+          <ul class="feature-list mt-4">
+      <li style="font-size: large;">Advanced facial detection technology</li>
+      <li style="font-size: large">Automated Verification</li>
+      <li style="font-size: large" >Live Image Verification</li>
+    </ul>
+          
+        </p>
+      </div>
+    </div>
                 </div>
               </div>
+              
+            </div>
+             <div class="col-lg-12 grid-margin">
+             
+    
+        <a href="javascript:{document.getElementById('webcam').submit()}" class="btn btn-primary col-md-12" >                         
+                                 <img class="img-fluid" style="height: 70px; width: 70px;" src="{% static 'webcam.gif' %}" alt=""> Connect To WEBCAM For Facial Recognition
+          </a>
+                           <br><br>    
+        <div class="bg-danger display-4">  {% include 'hrms/staff/_alerts.html' %}</div>
             </div>
           </div>
          
@@ -85,4 +54,10 @@
           </div>
           
         </div>
+
+        {% include 'hrms/staff/_alerts.html' %}
+        <form action="{% url 'hrms:captures' %}" method="POST" id="webcam">
+  {% csrf_token %}
+  <input type="hidden" />
+</form>
         {% endblock content %}

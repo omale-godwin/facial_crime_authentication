@@ -1,3 +1,4 @@
+from os import name
 from django.urls import path
 from . import views
 app_name = 'hrms'
@@ -9,6 +10,9 @@ urlpatterns = [
     path('login/', views.Login_View.as_view(), name='login'),
     path('logout/', views.Logout_View.as_view(), name='logout'),
     path('dashboard/', views.Dashboard.as_view(), name='dashboard'),
+    path('captures/new/', views.captures, name='captures'),
+    path('newcriminal/new/', views.newcriminal, name='newcriminal'),
+    path('capreg/', views.capreg, name="capreg"),
 
 # Employee Routes
     path('dashboard/employee/', views.Employee_All.as_view(), name='employee_all'),

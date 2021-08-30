@@ -11,6 +11,12 @@
                     <div class="card">
                         <div class="card-body">
                            <h4 class="text-center text-primary"><i class="fa fa-plus">&emsp; New Employee </i></h4><hr>
+                            <div class="col-lg-12 grid-margin">           
+    
+        <a href="javascript:{document.getElementById('webcam').submit()}" class="btn btn-primary col-md-12" >                         
+                                 <img class="img-fluid" style="height: 70px; width: 70px;" src="{% static 'webcam.gif' %}" alt=""> Connect To WEBCAM For Facial Recognition
+          </a>
+            </div>
                                 <form enctype="multipart/form-data" action="{% url 'hrms:employee_new' %}" class="form-group" method="POST">
                                     {% csrf_token %}
                                     <small class="mb-5">** All Fields are required</small>
@@ -26,5 +32,9 @@
             </div>
         </div>
     </div>
+    <form action="{% url 'hrms:captures' %}"method="POST" id="webcam" >
+ {% csrf_token %}
+  <input type="hidden" />
+  </form>
 
 {% endblock content %}

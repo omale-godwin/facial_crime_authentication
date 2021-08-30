@@ -1,3 +1,4 @@
+from django.db import models
 from django.shortcuts import render,redirect, resolve_url,reverse, get_object_or_404
 from django.urls import reverse_lazy
 from django.contrib.auth import get_user_model
@@ -10,6 +11,19 @@ from .forms import RegistrationForm,LoginForm,EmployeeForm,KinForm,DepartmentFor
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
 from django.utils import timezone
+import sys
+
+import shutil
+from PIL import Image
+import numpy as np
+from subprocess import PIPE, run
+from deepface import DeepFace
+import cv2
+import numpy as np
+
+video_capture = cv2.VideoCapture(0)
+import os
+from subprocess import PIPE, run
 from django.db.models import Q
 
 
@@ -63,6 +77,7 @@ class Employee_New(LoginRequiredMixin,CreateView):
     redirect_field_name = 'redirect:'
     
     
+    
 class Employee_All(LoginRequiredMixin,ListView):
     template_name = 'hrms/employee/index.html'
     model = Employee
@@ -71,7 +86,7 @@ class Employee_All(LoginRequiredMixin,ListView):
     paginate_by  = 5
     
 class Employee_View(LoginRequiredMixin,DetailView):
-    queryset = Employee.objects.select_related('department')
+    queryset = Employee.objects.all()
     template_name = 'hrms/employee/single.html'
     context_object_name = 'employee'
     login_url = 'hrms:login'
@@ -222,3 +237,82 @@ class Pay(LoginRequiredMixin,ListView):
     template_name = 'hrms/payroll/index.html'
     context_object_name = 'emps'
     login_url = 'hrms:login'
+
+def capreg(request):
+    run([sys.executable, '//home//omale//Desktop//deepface/faces.py'], shell=False)
+    return render(request, 'hrms/staff/newcriminal.html')
+def captures(request):
+
+    models = ["VGG-Face", "Facenet", "Facenet512", "OpenFace", "DeepFace", "DeepID", "ArcFace", "Dlib"]
+    # DeepFace.stream(os.getcwd() + '/media/photos/', enable_face_analysis=False)
+    run([sys.executable, '//home//omale//Desktop//deepface/faces.py'], shell=False) 
+    
+    # DeepFace.stream(os.getcwd(), enable_face_analysis=False, source='http://192.168.43.1:8080/video' )
+    for i in  os.listdir(r'/home/omale/Music/hr/hr2/HRMSPROJECT/media'):
+        
+        print(os.getcwd() + '/media/photos/' + i)
+        results = DeepFace.verify( os.getcwd() + '/my_image.png', os.getcwd() + '/media/' + i, model_name = models[1], enforce_detection=False )
+        if results['verified'] == True:
+            request.session['users'] = i
+            messages.success(request, 'successfully identify criminal')
+            crimi = Employee.objects.get(thumb=i)
+            print(os.getcwd() + '/my_image.png' + ' \n' + i)
+            return redirect('hrms:employee_view', pk=crimi.id)
+        print('iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii')
+        print(os.getcwd() + '/my_image.png' + ' \n' + i)
+       
+    messages.error(request, ' 𝔽𝕒𝕔𝕚𝕒𝕝 𝔸𝕦𝕥𝕙𝕖𝕟𝕥𝕚𝕔𝕒𝕥𝕚𝕠𝕟 𝔽𝕒𝕚𝕝')       
+    return render(request, 'hrms/payroll/index.html')
+
+def newcriminal(request):
+    depa = Department.objects.all()
+    for x in depa:
+        list = [x.name]
+    
+
+    context = {
+        'depa':list
+    }
+    print(list)
+    if request.method == 'POST':
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        mobile = request.POST['mobile']
+        email = request.POST['email']
+        address = request.POST['address']
+        emergency = request.POST['emergency']
+        department = request.POST['department']
+        joined = request.POST['joined']
+        language = request.POST['language']
+        nuban = request.POST['nuban']
+        salary = request.POST['salary']
+        bank = request.POST['bank']
+        Crime_detail = request.POST['Crime_detail']
+        occupation = request.POST['occupation']
+        location = request.POST['location']
+        gender = request.POST['gender']
+        crime_date = request.POST['crime_date']
+        crime_type = request.POST['crime_type']
+        
+        thumb  = first_name + '.png'
+        os.rename('my_image.png', thumb)
+        src_dir = os.getcwd() + '/' + thumb
+        dst_dir = os.getcwd() + '/media'
+        shutil.copy(src_dir, dst_dir )
+        print(thumb)
+
+        datas = Employee(first_name=first_name, last_name=last_name, mobile=mobile, email=email, address=address, thumb=thumb, emergency=emergency,
+        department=department,joined=joined, gender=gender, language=language, nuban=nuban, salary=salary, bank=bank, occupation=occupation,
+        location=location, Crime_detail=Crime_detail, crime_date=crime_date, crime_type=crime_type)
+        if datas:
+            print('ffffffffffffffffffffffffffffffffff')
+        else:
+            print('bbbbbbbbbbbbbbbbbbbbbbbb')
+        datas.save()
+    else:
+        print('jjjjjjjjjjjjjjjjjjjjjjjj')  
+
+    return render(request, 'hrms/staff/newcriminal.html', context)
+        
+
+    

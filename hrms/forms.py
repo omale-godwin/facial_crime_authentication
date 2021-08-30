@@ -27,10 +27,8 @@ class EmployeeForm (forms.ModelForm):
     mobile = forms.CharField(strip=True, widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Mobile Number'}))
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class':'form-control','placeholder':'Valid Email'}))
     emergency = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Relative Mobile Number'}))
-    gender = forms.ChoiceField(choices=Employee.GENDER,widget=forms.Select(attrs={'class':'form-control'}))
     department = forms.ModelChoiceField(Department.objects.all(),required=True, empty_label='Select a department',widget=forms.Select(attrs={'class':'form-control'}))
-    language = forms.ChoiceField(choices=Employee.LANGUAGE,widget=forms.Select(attrs={'class':'form-control'}))
-
+    
     class Meta:
         model = Employee
         fields = ('first_name', 'last_name', 'mobile','email','emergency','salary','gender','department','bank','nuban','language','thumb')
@@ -42,12 +40,12 @@ class EmployeeForm (forms.ModelForm):
 
 class KinForm(forms.ModelForm):
 
-    first_name = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
-    last_name = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
-    address = forms.CharField(widget=forms.Textarea(attrs={'class':'form-control'}))
+    crime_date = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    crime_type = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    Crime_detail = forms.CharField(widget=forms.Textarea(attrs={'class':'form-control'}))
     occupation = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
     mobile = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
-    employee = forms.ModelChoiceField(Employee.objects.filter(kin__employee=None),required=False,widget=forms.Select(attrs={'class':'form-control'}))
+    criminal_name = forms.ModelChoiceField(Employee.objects.filter(kin__employee=None),required=False,widget=forms.Select(attrs={'class':'form-control'}))
 
     class Meta:
         model = Kin
