@@ -239,13 +239,13 @@ class Pay(LoginRequiredMixin,ListView):
     login_url = 'hrms:login'
 
 def capreg(request):
-    run([sys.executable, '//home//omale//Desktop//deepface/faces.py'], shell=False)
+    run([sys.executable, os.getcwd() + '/faces.py'], shell=False) 
     return render(request, 'hrms/staff/newcriminal.html')
 def captures(request):
 
     models = ["VGG-Face", "Facenet", "Facenet512", "OpenFace", "DeepFace", "DeepID", "ArcFace", "Dlib"]
     # DeepFace.stream(os.getcwd() + '/media/photos/', enable_face_analysis=False)
-    run([sys.executable, '//home//omale//Desktop//deepface/faces.py'], shell=False) 
+    run([sys.executable, os.getcwd() + '/faces.py'], shell=False) 
     
     # DeepFace.stream(os.getcwd(), enable_face_analysis=False, source='http://192.168.43.1:8080/video' )
     for i in  os.listdir(r'/home/omale/Music/hr/hr2/HRMSPROJECT/media'):

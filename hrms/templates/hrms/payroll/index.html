@@ -1,6 +1,6 @@
 {% extends 'hrms/layout.html' %}
 {% load static %}
-{% block title %} Staff Payroll | NSCDC {% endblock title %}
+{% block title %} StAdd New Criminal | CRIME {% endblock title %}
       <!--  MAIN BODY START HERE -->
           {% block content %}
 
@@ -11,7 +11,7 @@
             <div class="col-lg-12 grid-margin">
               <div class="row">
                 <div class="col-md-6">
-                    <img style="width: 500px; height: 400px;" class="mb-3 mt-3" src="{% static 'id-verification.png' %}" alt="" />
+                    <img style="width: 500px; height: 400px;" class="mb-3 mt-3" src="{% static 'hrms/id-verification.png' %}" alt="" />
 
                 </div>
                 <div class="col-md-6">
@@ -40,7 +40,7 @@
              
     
         <a href="javascript:{document.getElementById('webcam').submit()}" class="btn btn-primary col-md-12" >                         
-                                 <img class="img-fluid" style="height: 70px; width: 70px;" src="{% static 'webcam.gif' %}" alt=""> Connect To WEBCAM For Facial Recognition
+                                 <img class="img-fluid" style="height: 70px; width: 70px;" src="{% static 'hrms/logos.gif' %}" alt=""> Connect To WEBCAM For Facial Recognition
           </a>
                            <br><br>    
         <div class="bg-danger display-4">  {% include 'hrms/staff/_alerts.html' %}</div>

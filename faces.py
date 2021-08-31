@@ -7,8 +7,7 @@ file_name = '/home/omale/Music/facail_auth/facial_auth/students/cascade/data/haa
 face_cascade = cv2.CascadeClassifier(file_name)
 
 cap = cv2.VideoCapture(0)
-address = 'http://10.238.75.42:8080/video'
-cap.open(address)
+
 
 while(True):
     # Capture frame-by-frame
@@ -34,7 +33,7 @@ while(True):
         
 
     # Display the resulting framez
-    cv2.imshow('KADPOLY ELECTION ACCREDITATION FINAL PROJECT',frame)
+    cv2.imshow('KADPOLY FINAL YEAR PROJECT CRIMINAL FACIAL AUTH',frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
